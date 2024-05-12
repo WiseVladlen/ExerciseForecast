@@ -18,15 +18,10 @@ class App extends StatelessWidget {
           brightness: isLightMode ? Brightness.light : Brightness.dark,
           error: Colors.redAccent,
         ),
-        extensions: isLightMode
-            ? const <ThemeExtension<dynamic>>[
-                TextStyles.light(),
-                ColorPalette.light(),
-              ]
-            : const <ThemeExtension<dynamic>>[
-                TextStyles.dark(),
-                ColorPalette.dark(),
-              ],
+        extensions: const <ThemeExtension<dynamic>>[
+          TextStyles(),
+          ColorPalette(),
+        ],
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: <TargetPlatform, PageTransitionsBuilder>{
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),

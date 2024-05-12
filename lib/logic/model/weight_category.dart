@@ -1,7 +1,7 @@
-enum WeightCategory {
-  underweight,
+enum WeightClass {
+  underWeight,
   normalWeight,
-  overweight,
+  overWeight,
   obesityGradeOne,
   obesityGradeTwo,
   obesityGradeThree;

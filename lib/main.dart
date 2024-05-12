@@ -22,6 +22,8 @@ final AutoDisposeProvider<DioService> httpServiceProvider = Provider.autoDispose
 
   ref.onDispose(() => service.dispose());
 
+  ref.maintainState = true;
+
   return service;
 });
 
@@ -37,11 +39,9 @@ final StateNotifierProvider<DataEntryStateNotifier, DataEntryState> dataEntrySta
 final FutureProvider<PredictionResult> predictionResultProvider = FutureProvider<PredictionResult>((
   FutureProviderRef<PredictionResult> ref,
 ) async {
-  final WeightCategory weightCategory = BMICalculator.run(ref.watch(dataEntryStateProvider).user);
+  final WeightClass weightClass = BMICalculator.run(ref.watch(dataEntryStateProvider).user);
 
-  await Future<void>.delayed(const Duration(seconds: 3)); // TODO
-
-  return ref.read(repositoryProvider).calculate(weightCategory);
+  return ref.read(repositoryProvider).calculate(weightClass);
 });
 
 void main() {

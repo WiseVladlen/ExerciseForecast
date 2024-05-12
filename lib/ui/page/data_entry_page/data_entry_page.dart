@@ -116,7 +116,11 @@ class DataEntryPage extends ConsumerWidget {
                     : () {
                         Navigator.of(context).push(
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => PredictionResultPage(),
+                            builder: (BuildContext context) => PredictionResultPage(
+                              args: PredictionResultPageArgs(
+                                approachCount: int.parse(ref.read(dataEntryStateProvider).durationValidator.value) ~/ 5,
+                              ),
+                            ),
                           ),
                         );
                       },

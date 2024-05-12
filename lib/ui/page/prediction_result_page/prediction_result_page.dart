@@ -1,12 +1,23 @@
 import 'package:exercise_forecast/logic/model/prediction_result.dart';
 import 'package:exercise_forecast/main.dart';
 import 'package:exercise_forecast/ui/widget/you_tube_video_player.dart';
+import 'package:exercise_forecast/utils/build_context.dart';
 import 'package:exercise_forecast/utils/video_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class PredictionResultPageArgs {
+  const PredictionResultPageArgs({required this.approachCount});
+
+  final int approachCount;
+}
+
 class PredictionResultPage extends ConsumerWidget {
+  const PredictionResultPage({super.key, required this.args});
+
+  final PredictionResultPageArgs args;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<PredictionResult> asyncResult = ref.watch(predictionResultProvider);
@@ -27,9 +38,14 @@ class PredictionResultPage extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Text(result.description.isEmpty ? 'Description' : result.description),
             ),
-            YouTubeVideoPlayer(
-              url: result.videoUrl.isEmpty ? 'https://www.youtube.com/watch?v=FQtPSH2ibYQ' : result.videoUrl,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                'Exercise recommendations: 12 times in ${args.approachCount} approaches',
+                style: context.textStyles.noteText,
+              ),
             ),
+            YouTubeVideoPlayer(url: result.videoUrl),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: OutlinedButton.icon(

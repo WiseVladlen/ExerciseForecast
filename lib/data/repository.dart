@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:exercise_forecast/data/dto/request_dto.dart';
 import 'package:exercise_forecast/data/dto/response_dto.dart';
 import 'package:exercise_forecast/data/http_helper/dio_service.dart';
 import 'package:exercise_forecast/data/http_helper/rest_path.dart';
@@ -11,14 +12,12 @@ class Repository {
 
   final DioService _service;
 
-  Future<PredictionResult> calculate(WeightCategory category) async {
-    return ResponseDto.fromJson(<String, dynamic>{}).result; // TODO
-
+  Future<PredictionResult> calculate(WeightClass weightClass) async {
     final Response<dynamic> response = await _service.client.get<dynamic>(
       RestPath.endpoint,
-      data: RequestDto(category: category).toJson(),
+      queryParameters: <String, dynamic>{'weight_class': weightClass.name},
     );
-    final Map<String, dynamic> responseData = response.data as Map<String, dynamic>;
+    final Map<String, dynamic> responseData = jsonDecode(response.data as String) as Map<String, dynamic>;
 
     return ResponseDto.fromJson(responseData).result;
   }
